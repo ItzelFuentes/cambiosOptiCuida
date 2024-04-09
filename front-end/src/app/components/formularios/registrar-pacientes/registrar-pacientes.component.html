@@ -1,0 +1,262 @@
+<div class="spinner-container" *ngIf="loader">
+    <div
+      class="spinner-grow text-primary"
+      style="width: 3rem; height: 3rem"
+      role="status"
+    >
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+<div class="conteiner mt-5" *ngIf="!loader">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <div class="card">
+                <div class="card-body text-center">
+                    <span class="titulo"></span>
+                    <form [formGroup]="pacienteForm" (ngSubmit)="sendFiles()" enctype="multipart/form-data">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Nombre</label>
+                                <input formControlName="nom" type="text" class="form-control" placeholder="Nombre">
+                                <div class="text-danger"
+                                    *ngIf="pacienteForm.get('nom')?.hasError('required') && pacienteForm.get('nom')?.touched">
+                                    <span>Este campo es <strong>obligatorio</strong></span>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Apellido Paterno</label>
+                                <input formControlName="apeP" type="text" class="form-control"
+                                    placeholder="Apellido Paterno">
+                                <div class="text-danger"
+                                    *ngIf="pacienteForm.get('apeP')?.hasError('required') && pacienteForm.get('apeP')?.touched">
+                                    <span>Este campo es <strong>obligatorio</strong></span>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Apellido Materno</label>
+                                <input formControlName="apeM" type="text" class="form-control"
+                                    placeholder="Apellido Materno">
+                                <div class="text-danger"
+                                    *ngIf="pacienteForm.get('apeM')?.hasError('required') && pacienteForm.get('apeM')?.touched">
+                                    <span>Este campo es <strong>obligatorio</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Calle</label>
+                            <input formControlName="calle" type="text" class="form-control">
+                            <div class="text-danger"
+                                *ngIf="pacienteForm.get('calle')?.hasError('required') && pacienteForm.get('calle')?.touched">
+                                <span>Este campo es <strong>obligatorio</strong></span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Numero</label>
+                                <input formControlName="no" type="text" class="form-control" placeholder="118-A">
+                                <div class="text-danger"
+                                    *ngIf="pacienteForm.get('no')?.hasError('required') && pacienteForm.get('no')?.touched">
+                                    <span>Este campo es <strong>obligatorio</strong></span>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Colonia</label>
+                                <input formControlName="col" type="text" class="form-control" placeholder="">
+                                <div class="text-danger"
+                                    *ngIf="pacienteForm.get('col')?.hasError('required') && pacienteForm.get('col')?.touched">
+                                    <span>Este campo es <strong>obligatorio</strong></span>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Ciudad</label>
+                                <select formControlName="ciudad" id="inputState" class="form-control">
+                                    <option value="" disabled selected>Selecciona una ciudad</option>
+                                    <option *ngFor="let ciudad of listCiudad"> {{ciudad.nom}} </option>
+                                </select>
+                                <div class="text-danger"
+                                    *ngIf="pacienteForm.get('ciudad')?.hasError('required') && pacienteForm.get('ciudad')?.touched">
+                                    <span>Este campo es <strong>obligatorio</strong></span>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Código Postal</label>
+                                <input formControlName="cp" type="number" class="form-control" placeholder="37800">
+                                <div class="text-danger"
+                                    *ngIf="pacienteForm.get('cp')?.hasError('required') && pacienteForm.get('cp')?.touched">
+                                    <span>Este campo es <strong>obligatorio</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Número de teléfono de casa</label>
+                                <input formControlName="numTelCa" type="text" class="form-control">
+                                <div class="text-danger"
+                                    *ngIf="pacienteForm.get('numTelCa')?.hasError('required') && pacienteForm.get('numTelCa')?.touched">
+                                    <span>Este campo es <strong>obligatorio</strong></span>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Número de teléfono</label>
+                                <input formControlName="numTelAsp" type="text" class="form-control">
+                                <div class="text-danger"
+                                    *ngIf="pacienteForm.get('numTelAsp')?.hasError('required') && pacienteForm.get('numTelAsp')?.touched">
+                                    <span>Este campo es <strong>obligatorio</strong></span>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Otro número de teléfono</label>
+                                <input formControlName="numTelMaPa" type="text" class="form-control" id="inputZip">
+                                <div class="text-danger"
+                                    *ngIf="pacienteForm.get('numTelMaPa')?.hasError('required') && pacienteForm.get('numTelMaPa')?.touched">
+                                    <span>Este campo es <strong>obligatorio</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Email</label>
+                                <input formControlName="mail" type="email" class="form-control">
+                                <div class="text-danger"
+                                    *ngIf="pacienteForm.get('mail')?.hasError('required') && pacienteForm.get('mail')?.touched">
+                                    <span>Este campo es <strong>obligatorio</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">AV</th>
+                                    <th scope="col">AO</th>
+                                    <th scope="col">OD</th>
+                                    <th scope="col">OI</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td> SL </td>
+                                    <td>
+                                        <select class="form-select form-select-lg mb-3" formControlName="SLAO"
+                                            aria-label="Default select example" aria-placeholder="Género">
+                                            <option class="form-select" value="" disabled selected hidden>20/</option>
+                                            <option value="0">20/0</option>
+                                            <option value="20">20/20</option>
+                                            <option value="25">20/25</option>
+                                            <option value="30">20/30</option>
+                                            <option value="40">20/40</option>
+                                            <option value="50">20/50</option>
+                                            <option value="70">20/70</option>
+                                            <option value="100">20/100</option>
+                                            <option value="200">20/200</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-select form-select-lg mb-3" formControlName="SLOI"
+                                            aria-label="Default select example" aria-placeholder="Género">
+                                            <option class="form-select" value="" disabled selected hidden>20/</option>
+                                            <option value="0">20/0</option>
+                                            <option value="20">20/20</option>
+                                            <option value="25">20/25</option>
+                                            <option value="30">20/30</option>
+                                            <option value="40">20/40</option>
+                                            <option value="50">20/50</option>
+                                            <option value="70">20/70</option>
+                                            <option value="100">20/100</option>
+                                            <option value="200">20/200</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-select form-select-lg mb-3" formControlName="SLOD"
+                                            aria-label="Default select example" aria-placeholder="Género">
+                                            <option class="form-select" value="" disabled selected hidden>20/</option>
+                                            <option value="0">20/0</option>
+                                            <option value="20">20/20</option>
+                                            <option value="25">20/25</option>
+                                            <option value="30">20/30</option>
+                                            <option value="40">20/40</option>
+                                            <option value="50">20/50</option>
+                                            <option value="70">20/70</option>
+                                            <option value="100">20/100</option>
+                                            <option value="200">20/200</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td> CL </td>
+                                    <td>
+                                        <select class="form-select form-select-lg mb-3" formControlName="CLAO"
+                                            aria-label="Default select example" aria-placeholder="Género">
+                                            <option class="form-select" value="" disabled selected hidden>20/</option>
+                                            <option value="0">20/0</option>
+                                            <option value="20">20/20</option>
+                                            <option value="25">20/25</option>
+                                            <option value="30">20/30</option>
+                                            <option value="40">20/40</option>
+                                            <option value="50">20/50</option>
+                                            <option value="70">20/70</option>
+                                            <option value="100">20/100</option>
+                                            <option value="200">20/200</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-select form-select-lg mb-3" formControlName="CLOI"
+                                            aria-label="Default select example" aria-placeholder="Género">
+                                            <option class="form-select" value="" disabled selected hidden>20/</option>
+                                            <option value="0">20/0</option>
+                                            <option value="20">20/20</option>
+                                            <option value="25">20/25</option>
+                                            <option value="30">20/30</option>
+                                            <option value="40">20/40</option>
+                                            <option value="50">20/50</option>
+                                            <option value="70">20/70</option>
+                                            <option value="100">20/100</option>
+                                            <option value="200">20/200</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-select form-select-lg mb-3" formControlName="CLOD"
+                                            aria-label="Default select example" aria-placeholder="Género">
+                                            <option class="form-select" value="" disabled selected hidden>20/</option>
+                                            <option value="0">20/0</option>
+                                            <option value="20">20/20</option>
+                                            <option value="25">20/25</option>
+                                            <option value="30">20/30</option>
+                                            <option value="40">20/40</option>
+                                            <option value="50">20/50</option>
+                                            <option value="70">20/70</option>
+                                            <option value="100">20/100</option>
+                                            <option value="200">20/200</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="text-danger"
+                            *ngIf="pacienteForm.get('cD')?.hasError('required') && pacienteForm.get('cD')?.touched">
+                            <span>Este campo es <strong>obligatorio</strong></span>
+                        </div>
+                        <textarea placeholder="Comentarios" formControlName="coment"
+                            style="width: 100%; height: 250px; max-width: 100%; max-height: 250px; overflow: auto;"></textarea>
+                        
+                        <div class="form-row">
+                            <div class="mb-3">
+                                <label for="foto" class="form-label">Foto del paciente</label>
+                                <input class="form-control" type="file" id="foto" (change)="getFile($event, 'foto')">
+                            </div>
+                            <div class="mb-3">
+                                <label for="cert" class="form-label">Certificado de bachillerato</label>
+                                <input class="form-control" type="file" id="cert" (change)="getFile($event, 'cert')">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <button routerLink="/VerProfesionales" class="btn btn-secondary btn-lg float-start">VOLVER</button>
+                            <button type="submit" *ngIf="!pacienteForm.hasError('required')"
+                                class="btn btn-primary btn-lg float-end">GUARDAR</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
