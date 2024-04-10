@@ -545,6 +545,7 @@ select {
 	border: 1px solid #5e6576;
 	border-radius: 20px;
 	background-color: transparent;
+	margin-left:20%;
 }
 
 .cards-1 .card-icon {
