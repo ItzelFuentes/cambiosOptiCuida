@@ -193,7 +193,7 @@ function getSanitizedImageUrl(imageUrl, format) {
 
 //prueba
 document.querySelector("#boton").addEventListener("click", traerDatos);
-	
+
 function traerDatos(){
 	const xhttp = new XMLHttpRequest();
 	const url= 'http://localhost:9000/api/pac';
@@ -203,13 +203,10 @@ function traerDatos(){
 	xhttp.onreadystatechange = function (){
 		if(this.readyState == 4 && this.status == 200) {
 			let datos= JSON.parse(this.responseText)
-            //console.log(datos)
+
             let ofta= document.querySelector('#ofta'); 
             ofta.innerHTML=''; //limpiar los datos
 
-           // console.log(this.responseText);
-			//document.getElementById('response').innerHTML = this.responseText
-            
             for (let paciente of datos) {
                 const fecha = new Date(paciente.fechReg);
                 const fechaFormateada = `${fecha.getDate()}-${fecha.getMonth() + 1}-${fecha.getFullYear()}`;
@@ -226,7 +223,9 @@ function traerDatos(){
                             </a>
                         </td>
                         <td>${fechaFormateada}</td>
-                        <td><i style="cursor: pointer;" (click)="eliminarPaciente(${paciente._id})" class="fas fa-trash text-danger"></i></td>
+                        <td><i style="cursor: pointer;" (click)="eliminarPaciente(paciente._id)"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 30 30">
+                        <path d="M 13 3 A 1.0001 1.0001 0 0 0 11.986328 4 L 6 4 A 1.0001 1.0001 0 1 0 6 6 L 24 6 A 1.0001 1.0001 0 1 0 24 4 L 18.013672 4 A 1.0001 1.0001 0 0 0 17 3 L 13 3 z M 6 8 L 6 24 C 6 25.105 6.895 26 8 26 L 22 26 C 23.105 26 24 25.105 24 24 L 24 8 L 6 8 z"></path>
+                        </svg></i></td>
                     </tr>
                 `;
                 console.log("jala:3")
@@ -234,9 +233,9 @@ function traerDatos(){
             
 		}
 	}
-//const url= 'http://localhost:9000/api';
 	
 }
+
 
 
 
