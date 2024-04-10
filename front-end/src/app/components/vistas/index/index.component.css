@@ -5,3 +5,11 @@
   .header {
     margin-top: -10rem; /* Elimina el margen superior del encabezado */
   }
+
+  .image-container img {
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .image-container img:hover {
+    transform: scale(1.05);
+  }
