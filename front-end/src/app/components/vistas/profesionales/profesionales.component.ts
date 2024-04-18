@@ -3,6 +3,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Paciente } from 'src/app/models/paciente';
 import { PacienteServices } from 'src/app/services/paciente.service';
 import { ToastrService } from 'ngx-toastr';
+import { InactivityService } from 'src/app/services/inactivity-service.service';
 
 
 @Component({
@@ -25,11 +26,13 @@ export class ProfesionalesComponent {
     }, 2000);
     this.userRole = localStorage.getItem('userRole');
     this.isAdmin();
+    this.inactivityService.startTimer();
   }
 
   constructor(private _pacienteService: PacienteServices,
     private toastr: ToastrService,
-    public sanitizer: DomSanitizer) {
+    public sanitizer: DomSanitizer,
+    private inactivityService: InactivityService) {
   }
 
   listPaciente: Paciente[] = [];
