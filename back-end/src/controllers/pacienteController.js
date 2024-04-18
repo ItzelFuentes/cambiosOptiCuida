@@ -4,7 +4,7 @@ const multer = require('multer')
 const { notificarPaciente } = require('../service/notifi.service.js');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage })
-
+const Crypto = require ('crypto');
 
 
 exports.guardarPaciente = async (req, res) => {
@@ -159,4 +159,70 @@ exports.eliminarPaciente = async(req,res) =>{
         console.log(error);
         res.status(500).send('Hubo un error');
     }
+    
+}
+
+exports.formRestContraseña = (req,res)=> {
+    res.render('restablecer contraseña');
+
+}
+
+exports.EnviarToken = async (req, res, next) => {
+    const Email = req.body.Email;
+    const usuario = await Usuario.findOne(Email);
+
+    if(!Usuario){
+        req.flash('error', 'Usuario no encontrado');
+        return res.redirect('/Login');
+    }
+    //ususario existe
+    usuario.Token = Crypto.randomBytes(20).toString('hex');
+    //console.log(Crypto.randomBytes(20).toString('hex'))
+    usuario.expira = Date.now() + 3600000;
+    //guardar el BD
+    usuario.save();
+    const ResetUrl = `http://${req.headers.host}/restablecer-contraseña/${usuario.Token}`;
+    console.log(ResetUrl);
+
+    req.flash('correcto', 'Revisa tu bandeja de Email');
+    res.redirect('Login');
+
+}
+
+exports.ValidarToken = async (req, res) => {
+    res.render('resetPassword');
+
+}
+
+
+/*
+const Token  = req.params.Token;
+    const usuario = await Usuario.findOne({Token});
+    if(!usuario){
+        req.flash('error', 'No valido');
+        res.redirect('/restablecer');
+    }
+    res.render('restablecer-password', {
+    });*/ 
+exports.ActualizarContraseña = async (req, res) => {
+    const usuario = await Usuario.findOne({
+        Token: req.params.Token, 
+        expira:{$gt:Date.now()}
+    });
+    
+    if(!usuario){
+        req.flash('error', 'No valido');
+        res.redirect('/restablecer');
+    }
+
+    usuario.Token=null
+    usuario.expira= null
+    usuario.Contraseña =req.body,Contraseña
+
+    //guardar contraseña
+    await usuario.save();
+
+    req.flash('correcto', 'Tu contraseña se ha cambiado correctamente')
+    res.redirect('/Login');
+    
 }
