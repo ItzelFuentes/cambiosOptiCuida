@@ -28,7 +28,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MapaComponent } from './components/vistas/mapa/mapa.component';
 import { NosotrosComponent } from './components/vistas/nosotros/nosotros.component';
 import {MatIconModule} from '@angular/material/icon';
-
+import { ReestablecerContComponent } from './components/formularios/reestablecer-cont/reestablecer-cont.component';
+import { FormsModule } from '@angular/forms';
+import { NgxCaptchaModule } from 'ngx-captcha';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import {MatIconModule} from '@angular/material/icon';
     DeniedComponent,
     SearchComponent,
     MapaComponent,
-    NosotrosComponent
+    NosotrosComponent,
+    ReestablecerContComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +63,9 @@ import {MatIconModule} from '@angular/material/icon';
     MatSlideToggleModule,
     MatFormFieldModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    NgxCaptchaModule, 
+    FormsModule
   ],
   providers: [{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {floatLabel: 'always'}}],
   bootstrap: [AppComponent]
