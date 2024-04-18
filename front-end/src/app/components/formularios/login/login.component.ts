@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PacienteServices } from 'src/app/services/paciente.service';
 import Swal from 'sweetalert2';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -10,27 +10,36 @@ import Swal from 'sweetalert2';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+ 
+
+  
+  protected aFormGroup!: FormGroup;
+  siteKey:string = "6Lf2774pAAAAACmp4Ko2AygVn7T9CbmjL2ZJNNfB";
+
+
 
   formulario: FormGroup;
   loader = true;
   hide = true;
+  showPasswordResetLink = false;
 
-
+  constructor(private pacienteService: PacienteServices, private router: Router,private formBuilder: FormBuilder) {
+    this.formulario = new FormGroup({
+      email: new FormControl(),
+      password: new FormControl()
+    });
+  }
+  
   ngOnInit():void {
     setTimeout(()=>{
       this.loader = false;
     }, 2000);
+    this.aFormGroup = this.formBuilder.group({
+      recaptcha: ['', Validators.required]
+    });
   }
 
-  pacienteService = inject(PacienteServices);
-  router = inject(Router);
 
-  constructor(){
-    this.formulario = new FormGroup({
-      email: new FormControl(),
-      password: new FormControl()
-    })
-  }
 
   async onSubmit() {
     try {

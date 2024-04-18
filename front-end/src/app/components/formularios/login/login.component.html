@@ -19,11 +19,23 @@
     </div>
 
     <!-- Login Form -->
-    <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
-      <input type="text" id="login" class="fadeIn second" name="login" formControlName="email" placeholder="correo" />
-      <input type="password" id="password" class="fadeIn third" name="login" formControlName="password"
-        placeholder="contraseña" />
-      <input type="submit" value="Enviar" class="btn btn-info" />
+      <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+        <input type="text" id="login" class="fadeIn second" name="login" formControlName="email" placeholder="correo" />
+        <input type="password" id="password" class="fadeIn third" name="login" formControlName="password"
+          placeholder="contraseña" />
+        <input type="submit" value="Enviar" class="btn btn-info" />
+      </form>
+      <form [formGroup]="aFormGroup">
+        <ngx-recaptcha2 #captchaElem
+          [siteKey]="siteKey"
+          formControlName="recaptcha">
+        </ngx-recaptcha2>
+      
+      <div class="password-reset-container">
+        <div class="forgot-password" > <a href="/restablecer">¿Olvidaste tu contraseña?</a>
+        </div>
+      </div>
     </form>
+    
   </div>
 </div>
